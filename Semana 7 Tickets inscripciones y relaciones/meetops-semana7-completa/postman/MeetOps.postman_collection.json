@@ -1,0 +1,291 @@
+{
+  "info": {
+    "name": "MeetOps",
+    "description": "Una sola colección. No hace falta un environment: baseUrl ya vale http://localhost:8080/api.\n\nCorré los requests de arriba hacia abajo. Login guarda el token y Crear evento guarda el eventId.\n\nOrden: Health → Registrar organizador → Login organizador → Crear evento → Registrar asistente → Login asistente → Inscribirme → Mis tickets.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080/api"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "organizerToken",
+      "value": ""
+    },
+    {
+      "key": "eventId",
+      "value": ""
+    },
+    {
+      "key": "ticketId",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": "Secret123!"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "2. Registrar organizador",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"Ada\",\n  \"last_name\": \"Lovelace\",\n  \"email\": \"organizer@meetops.test\",\n  \"password\": \"{{password}}\",\n  \"role\": \"organizer\"\n}"
+        },
+        "url": "{{baseUrl}}/sessions/register"
+      }
+    },
+    {
+      "name": "3. Login organizador",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "if (body.token) {",
+              "    pm.collectionVariables.set('token', body.token);",
+              "    pm.collectionVariables.set('organizerToken', body.token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"organizer@meetops.test\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{baseUrl}}/sessions/login"
+      }
+    },
+    {
+      "name": "4. Crear evento",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "if (body.item && body.item._id) {",
+              "    pm.collectionVariables.set('eventId', body.item._id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{organizerToken}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Meetup MeetOps\",\n  \"description\": \"Encuentro de la semana 7\",\n  \"starts_at\": \"2027-06-01T19:00:00.000Z\",\n  \"location\": \"Buenos Aires\",\n  \"capacity\": 10\n}"
+        },
+        "url": "{{baseUrl}}/events"
+      }
+    },
+    {
+      "name": "5. Listar eventos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/events"
+      }
+    },
+    {
+      "name": "6. Ver evento",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/events/{{eventId}}"
+      }
+    },
+    {
+      "name": "7. Registrar asistente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"Ana\",\n  \"last_name\": \"Test\",\n  \"email\": \"ana@meetops.test\",\n  \"password\": \"{{password}}\",\n  \"role\": \"user\"\n}"
+        },
+        "url": "{{baseUrl}}/sessions/register"
+      }
+    },
+    {
+      "name": "8. Login asistente",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "if (body.token) {",
+              "    pm.collectionVariables.set('token', body.token);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"ana@meetops.test\",\n  \"password\": \"{{password}}\"\n}"
+        },
+        "url": "{{baseUrl}}/sessions/login"
+      }
+    },
+    {
+      "name": "9. Usuario actual",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/sessions/current"
+      }
+    },
+    {
+      "name": "10. Inscribirme al evento",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const body = pm.response.json();",
+              "if (body.item && body.item._id) {",
+              "    pm.collectionVariables.set('ticketId', body.item._id);",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"quantity\": 1\n}"
+        },
+        "url": "{{baseUrl}}/events/{{eventId}}/tickets"
+      }
+    },
+    {
+      "name": "11. Mis tickets",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/tickets/my-tickets"
+      }
+    },
+    {
+      "name": "12. Inscriptos del evento",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{organizerToken}}"
+          }
+        ],
+        "url": "{{baseUrl}}/events/{{eventId}}/tickets"
+      }
+    },
+    {
+      "name": "13. Cancelar ticket",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/tickets/{{ticketId}}/cancel"
+      }
+    },
+    {
+      "name": "14. Logout",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}"
+          }
+        ],
+        "url": "{{baseUrl}}/sessions/logout"
+      }
+    }
+  ]
+}
