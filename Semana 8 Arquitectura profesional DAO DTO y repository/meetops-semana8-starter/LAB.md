@@ -2,7 +2,7 @@
 
 Objetivo: implementar las capas **DAO → Repository → DTO** sin tocar controllers.
 
-## Orden sugerido en clase (~90 min)
+## Orden sugerido (~90 min)
 
 1. **UserDAO + UserRepository + UserDTO** (register / login / current)
 2. **EventDAO + EventRepository + EventDTO** (list / create)

@@ -1,34 +1,20 @@
-# Semana 8 — Arquitectura profesional (DAO · DTO · Repository)
+# Semana 8 — DAO, DTO y Repository
 
-Clase en vivo (prioridad).
+La misma API de eventos y tickets, separada en capas. El controller no habla con Mongo. El service aplica las reglas. El repository ordena el acceso. El DAO hace la consulta. El DTO decide qué datos salen en la respuesta.
 
-## Entregables
-
-| Item | Path |
+| Carpeta | Qué es |
 | --- | --- |
-| PPT | `Semana-8-Backend-II.pptx` |
-| **Starter (para clase)** | `meetops-semana8-starter/` |
-| **Completa (solución)** | `meetops-semana8-completa/` |
+| `meetops-semana8-starter` | Para completar. Los pasos están en `LAB.md`. |
+| `meetops-semana8-completa` | El mismo proyecto terminado. |
 
-## Ritmo sugerido (2 h)
-
-1. PPT: problema → DAO → Repository → DTO (30–40 min)
-2. Laboratorio con **starter** siguiendo `LAB.md` (60–70 min)
-3. Comparar con **completa** + `npm run smoke` (15 min)
-
-## Setup rápida (completa)
+`MONGO_URL` apunta a Mongo Atlas, no a una base local. Está en `.env.example`.
 
 ```bash
 cd meetops-semana8-completa
-cp .env.example .env   # si hace falta
+copy .env.example .env
 npm install
-# Mongo Atlas vía MONGO_URL en .env (no local)
-npm run start
-# otra terminal
+npm start
 npm run smoke
 ```
 
-## Postman
-
-Importar: `meetops-semana8-completa/postman/MeetOps-Semana8.postman_collection.json`  
-(mismo archivo en el starter). Variables: `baseUrl`, `email`, `token`, `eventId`.
+Postman: `meetops-semana8-completa/postman/MeetOps-Semana8.postman_collection.json`.

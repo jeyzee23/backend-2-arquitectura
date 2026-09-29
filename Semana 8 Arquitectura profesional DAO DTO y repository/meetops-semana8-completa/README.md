@@ -35,7 +35,7 @@ npm run smoke
 | POST | `/api/tickets/events/:eventId` | JWT | Inscripción |
 | GET | `/api/tickets/mine` | JWT | |
 
-## Capas clave (para mostrar en clase)
+## Dónde está cada capa
 
 - `src/dao/*` — acceso a Mongo
 - `src/repositories/*` — orquestación de persistencia

@@ -5,8 +5,8 @@ import { connectDB } from "./config/database.js";
 const start = async () => {
   await connectDB();
   app.listen(env.port, () => {
-    console.log(`MeetOps S8 STARTER on http://localhost:${env.port}`);
-    console.log("Los pasos pendientes están en dao/, repositories/ y dto/ (LAB.md)");
+    console.log(`MeetOps S6 listening on http://localhost:${env.port}`);
+    console.log("Foco: entidad Event + reglas de negocio en services");
   });
 };
 

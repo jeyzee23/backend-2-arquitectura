@@ -1,9 +1,9 @@
 {
-  "name": "meetops-semana8-starter",
+  "name": "meetops-semana6-starter",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "MeetOps — Semana 8: DAO, DTO y Repository.",
+  "description": "MeetOps — Semana 6 starter: entidad Event y lógica de negocio.",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",

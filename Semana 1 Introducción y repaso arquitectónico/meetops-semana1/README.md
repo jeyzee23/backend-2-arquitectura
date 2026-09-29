@@ -2,9 +2,9 @@
 
 Base del curso **Backend II**. API para meetups y workshops tech.
 
-## Finalidad de la clase
+## Qué arma este proyecto
 
-Dejar armado el servidor Express con estructura inicial, endpoints base y documentación, listos para crecer en las siguientes entregas.
+El servidor Express con la estructura inicial y los primeros endpoints. Las semanas siguientes suman usuarios, sesión, eventos y tickets.
 
 ## Cómo levantar
 

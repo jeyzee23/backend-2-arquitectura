@@ -1,20 +1,13 @@
-# MeetOps — Semana 8 (STARTER)
+# MeetOps — Semana 8
 
-Versión **pelada** para desarrollar en clase.
+La API de eventos y tickets, para separar en capas. Las rutas, los controllers, los services y la autenticación ya están. Faltan `dao/`, `repositories/` y `dto/`. Los pasos están en `LAB.md`. La versión terminada está en `../meetops-semana8-completa`.
 
-- Routes / Controllers / Services / Models / Auth → ya están
-- `dao/`, `repositories/`, `dto/` → **TODO** (ver `LAB.md`)
-
-## Setup
+`MONGO_URL` apunta a Mongo Atlas.
 
 ```bash
-cp .env.example .env   # MONGO_URL = Atlas (no local)
+copy .env.example .env
 npm install
-npm run start
+npm start
 ```
 
-Health debería responder. Register/login fallan hasta completar DAOs.
-
-## En clase
-
-Seguir [`LAB.md`](./LAB.md). Solución: `../meetops-semana8-completa`.
+`GET /api/health` responde. Registro y login empiezan a funcionar cuando los DAO están completos.
